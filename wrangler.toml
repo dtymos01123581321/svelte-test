@@ -11,3 +11,6 @@ kv_namespaces = [
 # Вкажіть шлях до вашого основного скрипта
 main = "src/routes/api/+server.ts"
 compatibility_date = "2024-09-15"
+
+[build.environment]
+NODE_VERSION = "18.19.0"
