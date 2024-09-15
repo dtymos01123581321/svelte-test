@@ -38,7 +38,7 @@
 
         // Fake fetch request - replace with actual backend logic
         try {
-            const response = await fetch('/api/shorten', {
+            const response = await fetch('/api', {
                 method: 'POST',
                 body: JSON.stringify({ url, shortUrl }),
                 headers: {

@@ -1,21 +1,18 @@
-export default {
-    async fetch(request: Request): Promise<Response> {
-        if (request.method === 'POST') {
-            const { url, shortUrl } = await request.json();
+import type { RequestHandler } from '@sveltejs/kit';
+import type { KVNamespace } from '@cloudflare/workers-types'; // Імпорт типу
 
-            // Перевірка чи існує вже Short URL
-            const existingShortUrl = await KV_NAMESPACE.get(shortUrl);
+declare const KV_NAMESPACE: KVNamespace;
 
-            if (existingShortUrl) {
-                return new Response(JSON.stringify({ message: 'Short URL already exists' }), { status: 400 });
-            }
+export const POST: RequestHandler = async ({ request }) => {
+    const { url, shortUrl } = await request.json();
 
-            // Збереження нового URL
-            await KV_NAMESPACE.put(shortUrl, url);
+    const existingShortUrl = await KV_NAMESPACE.get(shortUrl);
 
-            return new Response(null, { status: 200 });
-        }
-
-        return new Response("Method not allowed", { status: 405 });
+    if (existingShortUrl) {
+        return new Response(JSON.stringify({ message: 'Short URL already exists' }), { status: 400 });
     }
+
+    await KV_NAMESPACE.put(shortUrl, url);
+
+    return new Response(null, { status: 200 });
 };
