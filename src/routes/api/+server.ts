@@ -9,15 +9,22 @@ const KV_NAMESPACE: KVNamespace = process.env.NODE_ENV === 'production'
     } as unknown as KVNamespace;
 
 export const POST: RequestHandler = async ({ request }) => {
-    const { url, shortUrl } = await request.json();
+    try {
+        const { url, shortUrl } = await request.json();
 
-    const existingShortUrl = await KV_NAMESPACE.get(shortUrl);
+        const existingShortUrl = await KV_NAMESPACE.get(shortUrl);
+        console.log('existingShortUrl  --; ', existingShortUrl);
 
-    if (existingShortUrl) {
-        return new Response(JSON.stringify({ message: 'Short URL already exists' }), { status: 400 });
+        if (existingShortUrl) {
+            return new Response(JSON.stringify({ message: 'Short URL already exists' }), { status: 400 });
+        }
+
+        await KV_NAMESPACE.put(shortUrl, url);
+
+        return new Response(null, { status: 200 });
+    } catch (error) {
+        // Обробка помилок, якщо щось пішло не так
+        console.error('Error in POST request:', error);
+        return new Response(JSON.stringify({ message: 'Internal Server Error' }), { status: 500 });
     }
-
-    await KV_NAMESPACE.put(shortUrl, url);
-
-    return new Response(null, { status: 200 });
 };

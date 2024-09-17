@@ -36,7 +36,7 @@
             return;
         }
 
-        // Fake fetch request - replace with actual backend logic
+        // Запит на створення нового короткого URL
         try {
             const response = await fetch('/api', {
                 method: 'POST',
@@ -60,7 +60,7 @@
     }
 </script>
 
-<!-- Form UI -->
+<!-- Інтерфейс форми -->
 <form on:submit|preventDefault={handleSubmit}>
     <div>
         <label for="url">URL:</label>
@@ -78,7 +78,7 @@
     <div>
         <button type="submit" disabled={loading}>
             {#if loading}
-                <span>Loading...</span> <!-- Add spinner here if needed -->
+                <span>Loading...</span> <!-- Додати спіннер за потреби -->
             {:else}
                 Submit
             {/if}
