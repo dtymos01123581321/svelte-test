@@ -17,5 +17,5 @@
 </main>
 
 <footer class="container">
-    <p>&copy; 2024 Your Company</p>
+    <p>&copy; 2024 Bambfleilo Company</p>
 </footer>
