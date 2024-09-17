@@ -1,0 +1,19 @@
+name = "svelte-test" # Назва вашого проекту
+type = "javascript" # Використовуйте тип 'javascript', якщо ви не використовуєте TypeScript для Worker'ів.
+
+account_id = "de8b13535c3d7d9866033edeaffbd8ad" # Ваш Cloudflare Account ID
+workers_dev = true
+
+kv_namespaces = [
+    { binding = "KV_NAMESPACE", id = "029f21fe5d2e4d0e8c9d7aeec14205a3" } # KV Namespace
+]
+
+# Вкажіть шлях до вашого основного скрипта
+main = "src/routes/api/+server.ts"
+compatibility_date = "2024-09-15"
+
+[build.environment]
+NODE_VERSION = "18.19.0"
+
+[dev]
+platformProxy = { persist = "./kv-data" }
